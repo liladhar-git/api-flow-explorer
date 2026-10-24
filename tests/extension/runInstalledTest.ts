@@ -32,8 +32,8 @@ async function main() {
   if (install.status !== 0) throw new Error(`install failed (${install.status}): ${install.stderr}`);
   const list = spawnSync(cli, [...cliArgs, ...common, '--list-extensions', '--show-versions'], { encoding: 'utf8' });
   console.log('installed extensions:', list.stdout.trim());
-  if (!/local\.api-flow-explorer@0\.1\.0/.test(list.stdout)) throw new Error('extension is not listed after install');
-  const installedDir = readdirSync(extDir).find((d) => d.startsWith('local.api-flow-explorer'));
+  if (!/liladhar\.api-flow-explorer@0\.1\.0/.test(list.stdout)) throw new Error('extension is not listed after install');
+  const installedDir = readdirSync(extDir).find((d) => d.startsWith('liladhar.api-flow-explorer'));
   console.log('installed folder:', installedDir, readdirSync(path.join(extDir, installedDir!, 'dist')).join(', '));
 
   await runTests({

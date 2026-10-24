@@ -7,7 +7,7 @@ interface Api {
 }
 
 async function api(): Promise<Api> {
-  const ext = vscode.extensions.getExtension('local.api-flow-explorer');
+  const ext = vscode.extensions.getExtension('liladhar.api-flow-explorer');
   assert.ok(ext, 'extension not found');
   return (await ext.activate()) as Api;
 }

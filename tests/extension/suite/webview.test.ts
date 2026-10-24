@@ -10,7 +10,7 @@ export const tests: TestCase[] = [
   {
     name: 'the webview bundle boots inside a real VS Code webview (CSP, resource roots) and completes the ready handshake',
     async fn() {
-      const api = (await vscode.extensions.getExtension('local.api-flow-explorer')!.activate()) as Api;
+      const api = (await vscode.extensions.getExtension('liladhar.api-flow-explorer')!.activate()) as Api;
       await vscode.commands.executeCommand('apiFlowExplorer.showApiGraph');
       assert.ok(api.webviewStatus().open, 'panel did not open');
       const end = Date.now() + 20_000;

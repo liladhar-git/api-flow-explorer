@@ -9,7 +9,7 @@ interface Api {
 }
 
 async function api(): Promise<Api> {
-  const a = (await vscode.extensions.getExtension('local.api-flow-explorer')!.activate()) as Api;
+  const a = (await vscode.extensions.getExtension('liladhar.api-flow-explorer')!.activate()) as Api;
   if (!a.state.graph) await vscode.commands.executeCommand('apiFlowExplorer.scanWorkspace');
   return a;
 }

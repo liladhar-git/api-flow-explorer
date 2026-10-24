@@ -3,8 +3,17 @@
   "displayName": "Codebase API Flow Explorer",
   "description": "Statically analyze JS/TS codebases and visualize how frontend requests flow through API routes, middleware, services and data stores. Local and offline.",
   "version": "0.1.0",
-  "publisher": "local",
+  "publisher": "liladhar",
   "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liladhar-git/api-flow-explorer.git"
+  },
+  "homepage": "https://github.com/liladhar-git/api-flow-explorer#readme",
+  "bugs": {
+    "url": "https://github.com/liladhar-git/api-flow-explorer/issues"
+  },
   "private": true,
   "engines": {
     "vscode": "^1.90.0",
@@ -187,7 +196,7 @@
     "test:extension": "npm run build && node ./out/tests/extension/runTest.js",
     "pretest:extension": "tsc -p tests/extension/tsconfig.json",
     "bench": "node scripts/bench.mjs",
-    "package": "npm run build && vsce package --no-dependencies --allow-missing-repository --no-rewrite-relative-links -o api-flow-explorer.vsix",
+    "package": "npm run build && vsce package --no-dependencies --no-rewrite-relative-links -o api-flow-explorer.vsix",
     "vscode:prepublish": "npm run build",
     "verify:vsix": "npm run package && tsc -p tests/extension/tsconfig.json && node out/tests/extension/runInstalledTest.js"
   },
