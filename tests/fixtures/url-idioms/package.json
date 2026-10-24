@@ -1,0 +1,1 @@
+{ "name": "idioms", "dependencies": { "express": "^4", "axios": "^1", "@nestjs/config": "^3", "@nestjs/common": "^10" } }

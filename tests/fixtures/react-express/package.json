@@ -1,0 +1,5 @@
+{
+  "name": "react-express-fixture",
+  "private": true,
+  "dependencies": { "express": "^4.18.0", "react": "^18.0.0", "axios": "^1.6.0", "mongoose": "^8.0.0" }
+}

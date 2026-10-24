@@ -1,0 +1,10 @@
+**
+!dist/extension.js
+!dist/analyzer-worker.js
+!dist/webview/**
+!dist/webview-sidebar/**
+!media/**
+!package.json
+!README.md
+!LICENSE
+!docs/**

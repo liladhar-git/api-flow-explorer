@@ -1,0 +1,226 @@
+{
+  "name": "api-flow-explorer",
+  "displayName": "Codebase API Flow Explorer",
+  "description": "Statically analyze JS/TS codebases and visualize how frontend requests flow through API routes, middleware, services and data stores. Local and offline.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=20.19"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Analysis only parses files with the TypeScript compiler; it never executes workspace code. Scanning is disabled until the workspace is trusted."
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "apiFlowExplorer.scanWorkspace",
+        "title": "Scan Workspace",
+        "category": "API Flow Explorer",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "apiFlowExplorer.fullRescan",
+        "title": "Full Rescan (ignore cache)",
+        "category": "API Flow Explorer"
+      },
+      {
+        "command": "apiFlowExplorer.showApiGraph",
+        "title": "Open API Graph",
+        "category": "API Flow Explorer",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "apiFlowExplorer.findApiFlows",
+        "title": "Search API Flows",
+        "category": "API Flow Explorer",
+        "icon": "$(search)"
+      },
+      {
+        "command": "apiFlowExplorer.findReferences",
+        "title": "Find References of Symbol at Cursor",
+        "category": "API Flow Explorer"
+      },
+      {
+        "command": "apiFlowExplorer.analyzeImpact",
+        "title": "Analyze Impact of Symbol at Cursor",
+        "category": "API Flow Explorer"
+      },
+      {
+        "command": "apiFlowExplorer.exportGraphJson",
+        "title": "Export Graph as JSON",
+        "category": "API Flow Explorer"
+      },
+      {
+        "command": "apiFlowExplorer.exportMermaid",
+        "title": "Export Flow as Mermaid",
+        "category": "API Flow Explorer"
+      },
+      {
+        "command": "apiFlowExplorer.exportMarkdown",
+        "title": "Export Endpoints as Markdown",
+        "category": "API Flow Explorer"
+      },
+      {
+        "command": "apiFlowExplorer.searchEndpoints",
+        "title": "Filter Endpoints in Sidebar",
+        "category": "API Flow Explorer",
+        "icon": "$(search)"
+      },
+      {
+        "command": "apiFlowExplorer.clearEndpointSearch",
+        "title": "Clear Endpoint Filter",
+        "category": "API Flow Explorer",
+        "icon": "$(clear-all)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "apiFlowExplorer.findApiFlows",
+        "key": "ctrl+alt+a",
+        "when": "!inputFocus"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "apiFlowExplorer.searchEndpoints",
+          "when": "view == apiFlowExplorer.flows",
+          "group": "navigation@0"
+        },
+        {
+          "command": "apiFlowExplorer.clearEndpointSearch",
+          "when": "view == apiFlowExplorer.flows && apiFlowExplorer.endpointFilterActive",
+          "group": "navigation@0.5"
+        },
+        {
+          "command": "apiFlowExplorer.scanWorkspace",
+          "when": "view == apiFlowExplorer.flows",
+          "group": "navigation@1"
+        },
+        {
+          "command": "apiFlowExplorer.showApiGraph",
+          "when": "view == apiFlowExplorer.flows",
+          "group": "navigation@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "apiFlowExplorer.analyzeImpact",
+          "when": "editorLangId =~ /typescript|javascript/",
+          "group": "apiFlowExplorer@1"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "apiFlowExplorer",
+          "title": "API Flow Explorer",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "apiFlowExplorer": [
+        {
+          "id": "apiFlowExplorer.flows",
+          "name": "API Endpoints",
+          "type": "webview"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "API Flow Explorer",
+      "properties": {
+        "apiFlowExplorer.ignoredDirectories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional directory names to exclude from scanning (node_modules, .git, dist, build etc. are always excluded)."
+        },
+        "apiFlowExplorer.includeTests": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include test files (*.test.*, *.spec.*, __tests__) in analysis."
+        },
+        "apiFlowExplorer.maxFiles": {
+          "type": "number",
+          "default": 20000,
+          "description": "Maximum number of source files to analyze."
+        },
+        "apiFlowExplorer.baseUrls": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "description": "Static values for environment variables used in request base URLs, e.g. { \"NEXT_PUBLIC_API_URL\": \"http://localhost:3000/api\" }."
+        },
+        "apiFlowExplorer.autoRescan": {
+          "type": "boolean",
+          "default": true,
+          "description": "Incrementally re-analyze when source files change."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build:ext": "node scripts/build-ext.mjs",
+    "build:webview": "vite build --config webview/vite.config.mts",
+    "build": "npm run typecheck && npm run build:ext && npm run build:webview",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p webview/tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:extension": "npm run build && node ./out/tests/extension/runTest.js",
+    "pretest:extension": "tsc -p tests/extension/tsconfig.json",
+    "bench": "node scripts/bench.mjs",
+    "package": "npm run build && vsce package --no-dependencies --allow-missing-repository --no-rewrite-relative-links -o api-flow-explorer.vsix",
+    "vscode:prepublish": "npm run build",
+    "verify:vsix": "npm run package && tsc -p tests/extension/tsconfig.json && node out/tests/extension/runInstalledTest.js"
+  },
+  "devDependencies": {
+    "@dagrejs/dagre": "^3.1.1",
+    "@ts-morph/common": "^0.29.0",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/vscode": "^1.90.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
+    "@xyflow/react": "^12.12.0",
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.57.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "ts-morph": "^28.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.5",
+    "zod": "^4.6.7"
+  },
+  "author": "Codebase API Flow Explorer contributors",
+  "keywords": [
+    "api",
+    "express",
+    "nestjs",
+    "nextjs",
+    "react",
+    "graph",
+    "static-analysis",
+    "visualization"
+  ]
+}

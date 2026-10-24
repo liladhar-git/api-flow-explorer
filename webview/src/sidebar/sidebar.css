@@ -1,0 +1,56 @@
+:root {
+  --vscode-font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; --vscode-font-size: 13px;
+  --vscode-foreground: #cccccc; --vscode-descriptionForeground: #9d9d9d; --vscode-sideBar-background: #252526; --vscode-editor-background: #1e1e1e;
+  --vscode-input-background: #3c3c3c; --vscode-input-foreground: #cccccc; --vscode-focusBorder: #007fd4; --vscode-panel-border: #3c3c3c;
+  --vscode-list-hoverBackground: #2a2d2e; --vscode-list-activeSelectionBackground: #094771; --vscode-list-activeSelectionForeground: #fff;
+  --vscode-button-background: #0e639c; --vscode-button-foreground: #fff;
+}
+html, body { margin: 0; padding: 0; height: 100%; }
+body { font-family: var(--vscode-font-family); font-size: var(--vscode-font-size); color: var(--vscode-foreground); background: var(--vscode-sideBar-background, transparent); }
+#root, .af-sidebar { height: 100%; }
+.af-sidebar { display: flex; flex-direction: column; min-height: 0; }
+
+.af-header { display: flex; align-items: center; gap: 10px; padding: 12px 12px 8px; flex: none; }
+.af-header h1 { margin: 0; font-size: 14px; font-weight: 700; color: var(--vscode-foreground); }
+.af-header p { margin: 2px 0 0; font-size: 11px; line-height: 1.35; color: var(--vscode-descriptionForeground); }
+
+.af-searchrow { display: flex; gap: 6px; padding: 4px 12px 8px; flex: none; }
+.af-search { position: relative; flex: 1; min-width: 0; }
+.af-search input { width: 100%; box-sizing: border-box; padding: 6px 26px 6px 28px; font: inherit; color: var(--vscode-input-foreground); background: var(--vscode-input-background); border: 1px solid var(--vscode-input-border, var(--vscode-panel-border)); border-radius: 6px; outline: none; }
+.af-search input:focus { border-color: var(--vscode-focusBorder); }
+.af-search input::placeholder { color: var(--vscode-input-placeholderForeground, var(--vscode-descriptionForeground)); }
+.af-search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); display: flex; color: var(--vscode-descriptionForeground); pointer-events: none; }
+.af-clear { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; padding: 0; line-height: 16px; border: 0; background: none; color: var(--vscode-descriptionForeground); cursor: pointer; border-radius: 3px; }
+.af-clear:hover { color: var(--vscode-foreground); background: rgba(255, 255, 255, 0.1); }
+.af-iconbtn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; flex: none; color: var(--vscode-foreground); background: var(--vscode-input-background); border: 1px solid var(--vscode-input-border, var(--vscode-panel-border)); border-radius: 6px; cursor: pointer; }
+.af-iconbtn:hover { background: var(--vscode-list-hoverBackground); }
+.af-iconbtn.on { border-color: var(--vscode-focusBorder); }
+.af-iconbtn.small { width: 22px; height: 22px; border: 0; background: none; }
+.af-dot { position: absolute; top: 4px; right: 4px; width: 7px; height: 7px; border-radius: 50%; background: var(--vscode-button-background, #0e639c); }
+
+.af-pills { display: flex; gap: 6px; padding: 0 12px 8px; flex: none; }
+.af-pill { font: inherit; font-size: 12px; padding: 3px 10px; border-radius: 6px; cursor: pointer; color: var(--vscode-foreground); background: var(--vscode-input-background); border: 1px solid var(--vscode-input-border, var(--vscode-panel-border)); }
+.af-pill:hover { background: var(--vscode-list-hoverBackground); }
+.af-pill.on { color: var(--vscode-button-foreground, #fff); background: var(--vscode-button-background, #0e639c); border-color: transparent; font-weight: 600; }
+.af-pill-count { opacity: 0.8; margin-left: 4px; }
+
+.af-scroll { flex: 1; min-height: 0; overflow-y: auto; padding-bottom: 6px; }
+.af-group-head { display: flex; align-items: center; gap: 6px; width: 100%; padding: 6px 12px; font: inherit; font-weight: 600; text-align: left; color: var(--vscode-foreground); background: none; border: 0; cursor: pointer; }
+.af-group-head:hover { background: var(--vscode-list-hoverBackground); }
+.af-list { list-style: none; margin: 0; padding: 0 0 4px; }
+.af-row { display: flex; align-items: center; gap: 10px; padding: 4px 12px 4px 26px; cursor: pointer; outline: none; border-left: 3px solid transparent; }
+.af-row:hover { background: var(--vscode-list-hoverBackground); }
+.af-row:focus, .af-row.active { background: var(--vscode-list-activeSelectionBackground); color: var(--vscode-list-activeSelectionForeground); }
+.af-row.active { border-left-color: var(--vscode-focusBorder, #007fd4); }
+.af-path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--vscode-editor-font-family, monospace); font-size: 12px; }
+.af-row.item { flex-direction: column; align-items: flex-start; gap: 1px; }
+.af-item-name { font-size: 12.5px; }
+.af-item-sub { font-size: 10.5px; color: var(--vscode-descriptionForeground); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.af-row:focus .af-item-sub, .af-row.active .af-item-sub { color: inherit; opacity: 0.8; }
+.af-more { padding: 6px 26px; font-size: 11px; color: var(--vscode-descriptionForeground); }
+.af-empty { padding: 14px 12px; color: var(--vscode-descriptionForeground); line-height: 1.5; }
+.af-primary { font: inherit; padding: 5px 14px; border: 0; border-radius: 4px; cursor: pointer; color: var(--vscode-button-foreground); background: var(--vscode-button-background); }
+
+.af-filters-panel { flex: none; max-height: 48%; overflow: visible; padding: 8px 12px 12px; border-top: 1px solid var(--vscode-panel-border); background: var(--vscode-sideBar-background, transparent); }
+.af-filters-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.af-row .af-badge { width: 3.9em; flex: none; box-sizing: border-box; padding-left: 0; padding-right: 0; }

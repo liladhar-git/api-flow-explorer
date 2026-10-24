@@ -1,0 +1,1 @@
+{ "name": "details", "dependencies": { "express": "^4", "@nestjs/common": "^10", "@nestjs/swagger": "^7" } }

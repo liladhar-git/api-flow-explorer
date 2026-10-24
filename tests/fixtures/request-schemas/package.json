@@ -1,0 +1,1 @@
+{ "name": "schemas", "dependencies": { "express": "^4", "@nestjs/common": "^10", "@nestjs/mapped-types": "^2", "class-validator": "^0.14", "zod": "^3", "express-validator": "^7", "next": "^14", "axios": "^1" } }
